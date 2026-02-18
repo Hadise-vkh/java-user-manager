@@ -2,23 +2,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserManager {
-    User user;
     Scanner scanner = new Scanner(System.in);
     private ArrayList<User> users = new ArrayList<>();
 
     public ArrayList<User> getUsers() {
         return users;
     }
-
     //----------------methods-------------------------------
-    public void getInfo(){
+    public User getInfo(){
         System.out.print("Id: ");
-        user.setId(scanner.nextInt());
+        int id = scanner.nextInt();
         scanner.nextLine();
+
         System.out.print("Name: ");
-        user.setName(scanner.nextLine());
+        String name = scanner.nextLine();
+
         System.out.print("Email: ");
-        user.setEmail(scanner.nextLine());
+        String email = scanner.nextLine();
+
+        return new User(id, name, email);
     }
 
     public void addUser(User user){
@@ -28,7 +30,8 @@ public class UserManager {
 
     public void showUser(int id){
         System.out.print("Result: ");
-        System.out.println(users.get(id));
+        System.out.println(users.get(id).toString()
+        );
     }
 
     public void updateUser(User user) {
@@ -37,7 +40,7 @@ public class UserManager {
     }
 
     public void deleteUser(int id) {
-        users.remove(user.getId());
+        users.remove(id);
         System.out.println("User removed successfully");
     }
 }

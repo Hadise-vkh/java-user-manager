@@ -1,8 +1,15 @@
-import java.util.Scanner;
 
 public class User {
-    Scanner scanner = new Scanner(System.in);
     UserManager userManager;
+
+    @Override
+    public String toString() {
+        return "User {" +
+                " id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}' + "\n";
+    }
 
 //------------fields-------------------------------
     private int id;
