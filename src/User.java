@@ -1,6 +1,5 @@
 
 public class User {
-    UserManager userManager;
 
     @Override
     public String toString() {
@@ -48,7 +47,6 @@ public class User {
         this.name = name;
         this.email = email;
     }
-    public User() {
-    }
 
+    public User() { }
 }
