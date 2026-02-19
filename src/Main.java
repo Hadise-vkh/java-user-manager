@@ -2,13 +2,20 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         UserManager userManager = new UserManager();
         Scanner scanner = new Scanner(System.in);
         while (true){
             System.out.println(userManager.getUsers().toString());
-            System.out.print("What do you want to do?\nChoose a number(enter 0 to exit):\n" +
-                    "1.Add User\n2.Show User\n3.Update User\n4.Delete User\nYour choice: ");
+            System.out.print("""
+                    What do you want to do?
+                    Choose a number(enter 0 to exit):
+                    1.Add User
+                    2.Show User
+                    3.Update User
+                    4.Delete User
+                    Your choice:\s""");
             try {
                 int choice = scanner.nextInt();
                 User user = new User();
@@ -21,7 +28,7 @@ public class Main {
                 }else {
                     switch (choice){
                         case 1:
-                            user = userManager.getInfo();
+                            user = GetInfo.getInfo();
                             userManager.addUser(user);
                             break;
                         case 2:
@@ -30,7 +37,7 @@ public class Main {
                             userManager.showUser(user.getId());
                             break;
                         case 3:
-                            user = userManager.getInfo();
+                            user = GetInfo.getInfo();
                             userManager.updateUser(user);
                             break;
                         case 4:
