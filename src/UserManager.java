@@ -3,9 +3,6 @@ import java.util.ArrayList;
 public class UserManager {
     private final ArrayList<User> users = new ArrayList<>();
 
-    public ArrayList<User> getUsers() {
-        return users;
-    }
     //----------------methods-------------------------------
 
     public void addUser(User user) {
@@ -32,6 +29,7 @@ public class UserManager {
                 return;
             }
         }
+            System.out.println("User with this ID doesn't exist");
     }
 
     public void updateUser(User user) {
@@ -52,5 +50,6 @@ public class UserManager {
                 return;
             }
         }
+        System.out.println("User with this ID doesn't exist");
     }
 }

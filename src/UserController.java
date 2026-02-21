@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserController {
@@ -15,8 +14,13 @@ public class UserController {
                 4.Delete User
                 Your choice:\s""");
             try {
-                int choice = scanner.nextInt();
-                User user = new User();
+                String firstInput = scanner.nextLine();
+                if (firstInput.trim().isBlank()){
+                    System.out.println("Please enter a number from 0 to 4\n");
+                    continue;
+                }
+                int choice = Integer.parseInt(firstInput);
+                User user;
                 if (choice < 0 || choice > 4) {
                     System.out.println("Please enter a number from 0 to 4");
                     continue;
@@ -30,8 +34,7 @@ public class UserController {
                             userManager.addUser(user);
                             break;
                         case 2:
-                            System.out.print("Id: ");
-                            user.setId(scanner.nextInt());
+                            user = GetInfo.getJustId();
                             userManager.showUser(user);
                             break;
                         case 3:
@@ -39,15 +42,13 @@ public class UserController {
                             userManager.updateUser(user);
                             break;
                         case 4:
-                            System.out.print("Id: ");
-                            user.setId(scanner.nextInt());
+                            user = GetInfo.getJustId();
                             userManager.deleteUser(user);
                             break;
                     }
                 }
-            } catch (InputMismatchException e) {
+            } catch (Exception e) {
                 System.out.println("Please enter a valid number(0 to 4) ");
-                scanner.nextLine();
             }
         }
     }

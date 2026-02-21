@@ -12,18 +12,14 @@ public class User {
 
 //------------fields-------------------------------
 
-    private int id;
+    private final int id;
     private String name;
     private String email;
 
-//------------getter & setter----------------------
+//------------getter----------------------------------
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
 //----------------constructors-------------------------
@@ -34,5 +30,7 @@ public class User {
         this.email = email;
     }
 
-    public User() { }
+    public User(int id) {
+        this.id = id;
+    }
 }
