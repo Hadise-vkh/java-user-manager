@@ -6,7 +6,6 @@ public class UserController {
         UserManager userManager = new UserManager();
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println(userManager.getUsers().toString());
             System.out.print("""
                 What do you want to do?
                 Choose a number(enter 0 to exit):
@@ -33,7 +32,7 @@ public class UserController {
                         case 2:
                             System.out.print("Id: ");
                             user.setId(scanner.nextInt());
-                            userManager.showUser(user.getId());
+                            userManager.showUser(user);
                             break;
                         case 3:
                             user = GetInfo.getInfo();
@@ -42,7 +41,7 @@ public class UserController {
                         case 4:
                             System.out.print("Id: ");
                             user.setId(scanner.nextInt());
-                            userManager.deleteUser(user.getId());
+                            userManager.deleteUser(user);
                             break;
                     }
                 }
