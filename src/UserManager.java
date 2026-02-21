@@ -3,8 +3,6 @@ import java.util.ArrayList;
 public class UserManager {
     private final ArrayList<User> users = new ArrayList<>();
 
-    //----------------methods-------------------------------
-
     public void addUser(User user) {
         boolean check = false;
         for (int i = 0; i < users.size(); i++) {

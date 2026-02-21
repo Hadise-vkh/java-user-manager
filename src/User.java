@@ -10,20 +10,17 @@ public class User {
                 '}' + "\n";
     }
 
-//------------fields-------------------------------
-
+    //fields
     private final int id;
     private String name;
     private String email;
 
-//------------getter----------------------------------
-
+    //getter
     public int getId() {
         return id;
     }
 
-//----------------constructors-------------------------
-
+    //constructors
     public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
