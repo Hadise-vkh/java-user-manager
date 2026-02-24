@@ -1,11 +1,9 @@
 package com.usermanager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class UserDao {
+    UserController userController = new UserController();
     public void getAll() {
         try (
                 Connection connection = DatabaseConnection.getConnection();
@@ -25,6 +23,23 @@ public class UserDao {
             }
         } catch (
                 SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public void addUser(String name, String email) {
+        String query = "insert into users(name, email) values(?, ?)";
+
+        try (
+                Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+
+            stmt.executeUpdate();
+            System.out.println("User added successfully");
+        } catch (SQLException e) {
             e.printStackTrace();
 
         }
