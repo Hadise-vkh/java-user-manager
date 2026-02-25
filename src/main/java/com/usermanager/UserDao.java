@@ -1,6 +1,7 @@
 package com.usermanager;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class UserDao {
     public void getAll() {
@@ -82,6 +83,32 @@ public class UserDao {
                 System.out.println("User updated successfully");
             else
                 System.out.println("User not exist, check users id by option 2");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUser(User user){
+        Scanner scanner = new Scanner(System.in);
+        String query = "delete from users  where id = ?;";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query)){
+
+            stmt.setInt(1,user.getId());
+
+            System.out.print("Are you sure? (Y/N): ");
+            String answer = scanner.next();
+            if (answer.equalsIgnoreCase("y")){
+                int change = stmt.executeUpdate();
+                if (change > 0)
+                    System.out.println("User deleted successfully");
+                else
+                    System.out.println("User not exist, check users id by option 2");
+            } else if (answer.equalsIgnoreCase("n")) {
+                return;
+            }else
+                System.out.println("Not valid, try again");
+
         }catch (SQLException e){
             e.printStackTrace();
         }
