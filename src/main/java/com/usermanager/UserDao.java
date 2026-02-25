@@ -3,7 +3,6 @@ package com.usermanager;
 import java.sql.*;
 
 public class UserDao {
-    UserController userController = new UserController();
     public void getAll() {
         try (
                 Connection connection = DatabaseConnection.getConnection();
@@ -25,6 +24,31 @@ public class UserDao {
                 SQLException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void getById(int id) {
+        String query = "select * from users where id = ?;";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setInt(1, id);
+            ResultSet result = stmt.executeQuery();
+
+            if (result.next()) {
+                int userId = result.getInt("id");
+                String name = result.getString("name");
+                String email = result.getString("email");
+                System.out.printf("""
+                        id = %d
+                        name = %s
+                        email = %s
+
+                        """, userId, name, email);
+            }else
+                System.out.println("user not exist");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
