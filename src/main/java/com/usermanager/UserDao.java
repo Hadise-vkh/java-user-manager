@@ -54,7 +54,6 @@ public class UserDao {
 
     public void addUser(String name, String email) {
         String query = "insert into users(name, email) values(?, ?)";
-
         try (
                 Connection connection = DatabaseConnection.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -66,6 +65,25 @@ public class UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public void updateUser(User user){
+        String query = "update users set name = ?, email = ? where id = ?;";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query)){
+
+            stmt.setString(1,user.getName());
+            stmt.setString(2,user.getEmail());
+            stmt.setInt(3,user.getId());
+
+            int change = stmt.executeUpdate();
+            if (change > 0)
+                System.out.println("User updated successfully");
+            else
+                System.out.println("User not exist, check users id by option 2");
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }
