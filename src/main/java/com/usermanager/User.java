@@ -12,13 +12,19 @@ public class User {
     }
 
     //fields
-    private final int id;
+    private int id;
     private String name;
     private String email;
 
-    //getter
+    //getters
     public int getId() {
         return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getEmail(){
+        return email;
     }
 
     //constructors
@@ -27,8 +33,9 @@ public class User {
         this.name = name;
         this.email = email;
     }
-
-    public User(int id) {
-        this.id = id;
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
     }
+
 }

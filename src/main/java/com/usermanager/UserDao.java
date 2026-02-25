@@ -1,5 +1,4 @@
 package com.usermanager;
-
 import java.sql.*;
 import java.util.Scanner;
 
@@ -53,13 +52,13 @@ public class UserDao {
         }
     }
 
-    public void addUser(String name, String email) {
+    public void addUser(User user) {
         String query = "insert into users(name, email) values(?, ?)";
         try (
                 Connection connection = DatabaseConnection.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, name);
-            stmt.setString(2, email);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
 
             stmt.executeUpdate();
             System.out.println("User added successfully");
@@ -88,13 +87,13 @@ public class UserDao {
         }
     }
 
-    public void deleteUser(User user){
+    public void deleteUser(int id){
         Scanner scanner = new Scanner(System.in);
         String query = "delete from users  where id = ?;";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(query)){
 
-            stmt.setInt(1,user.getId());
+            stmt.setInt(1, id);
 
             System.out.print("Are you sure? (Y/N): ");
             String answer = scanner.next();
