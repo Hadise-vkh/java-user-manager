@@ -16,4 +16,4 @@ A console-based User Management System built with Java.
 - DAO Pattern
 
 This project initially used an in-memory ArrayList and was later refactored to use JDBC and a real database.  
-The main goal of this project was to practice backend fundamentals such as database connectivity, CRUD operations, the DAO design pattern.
+The main goal of this project was to practice backend fundamentals such as database connectivity, CRUD operations and the DAO design pattern.
