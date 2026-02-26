@@ -1,33 +1,31 @@
 package com.usermanager;
+
 import java.sql.*;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class UserDao {
-    public void getAll() {
+    public ArrayList<User> getAll() {
+        ArrayList<User> usersList = new ArrayList<>();
         try (
                 Connection connection = DatabaseConnection.getConnection();
                 Statement stmt = connection.createStatement();
                 ResultSet result = stmt.executeQuery("select * from users")) {
 
-            while (result.next()) {
-                int id = result.getInt("id");
-                String name = result.getString("name");
-                String email = result.getString("email");
-                System.out.printf("""
-                        id = %d
-                        name = %s
-                        email = %s
 
-                        """, id, name, email);
+            while (result.next()) {
+                usersList.add(new User(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("email")));
             }
+            return usersList;
         } catch (
                 SQLException e) {
             e.printStackTrace();
-
         }
+        return null;
     }
 
-    public void getById(int id) {
+    public User getById(int id) {
         String query = "select * from users where id = ?;";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -36,80 +34,65 @@ public class UserDao {
             ResultSet result = stmt.executeQuery();
 
             if (result.next()) {
-                int userId = result.getInt("id");
-                String name = result.getString("name");
-                String email = result.getString("email");
-                System.out.printf("""
-                        id = %d
-                        name = %s
-                        email = %s
-
-                        """, userId, name, email);
-            }else
-                System.out.println("user not exist");
+                return new User(
+                        result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("email")
+                );
+            } else
+                return null;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    public void addUser(User user) {
+    public boolean addUser(User user) {
         String query = "insert into users(name, email) values(?, ?)";
-        try (
-                Connection connection = DatabaseConnection.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
 
-            stmt.executeUpdate();
-            System.out.println("User added successfully");
+            int change = stmt.executeUpdate();
+            return change > 0;
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            return false;
 
         }
     }
 
-    public void updateUser(User user){
+    public boolean updateUser(User user) {
         String query = "update users set name = ?, email = ? where id = ?;";
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(query)){
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            stmt.setString(1,user.getName());
-            stmt.setString(2,user.getEmail());
-            stmt.setInt(3,user.getId());
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setInt(3, user.getId());
 
             int change = stmt.executeUpdate();
-            if (change > 0)
-                System.out.println("User updated successfully");
-            else
-                System.out.println("User not exist, check users id by option 2");
-        }catch (SQLException e){
-            e.printStackTrace();
+            return change > 0;
+        } catch (SQLException e) {
+            return false;
         }
     }
 
-    public void deleteUser(int id){
-        Scanner scanner = new Scanner(System.in);
+    public boolean deleteUser(int id) {
         String query = "delete from users  where id = ?;";
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(query)){
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
 
             stmt.setInt(1, id);
 
-            System.out.print("Are you sure? (Y/N): ");
-            String answer = scanner.next();
-            if (answer.equalsIgnoreCase("y")){
-                int change = stmt.executeUpdate();
-                if (change > 0)
-                    System.out.println("User deleted successfully");
-                else
-                    System.out.println("User not exist, check users id by option 2");
-            } else if (answer.equalsIgnoreCase("n")) {
-                return;
-            }else
-                System.out.println("Not valid, try again");
+            int change = stmt.executeUpdate();
+            return change > 0;
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }

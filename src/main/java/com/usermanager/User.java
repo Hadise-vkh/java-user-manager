@@ -4,11 +4,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User {" +
-                " id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}' + "\n";
+        return "id = " + id + "\n" +
+                "name = " + name + "\n" +
+                "email = " + email + "\n";
     }
 
     //fields
@@ -37,5 +35,4 @@ public class User {
         this.name = name;
         this.email = email;
     }
-
 }
